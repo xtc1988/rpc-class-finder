@@ -38,23 +38,9 @@ export const ResultCard: React.FC<ResultCardProps> = ({
         
         <Box sx={{ mb: 3 }}>
           <Typography variant="overline" color="text.secondary" sx={{ fontSize: "0.75rem" }}>
-            RPC CLASS
-          </Typography>
-          <Typography variant="h6" sx={{ fontFamily: "monospace", mb: 2 }}>
-            {result.rpcClass}
-          </Typography>
-          
-          <Typography variant="overline" color="text.secondary" sx={{ fontSize: "0.75rem" }}>
-            RPC NAME
-          </Typography>
-          <Typography variant="body1" sx={{ fontFamily: "monospace", mb: 2 }}>
-            {result.rpcName}
-          </Typography>
-          
-          <Typography variant="overline" color="text.secondary" sx={{ fontSize: "0.75rem" }}>
             JAVASCRIPT CLASS
           </Typography>
-          <Typography variant="body1" sx={{ fontFamily: "monospace", mb: 2 }}>
+          <Typography variant="h6" sx={{ fontFamily: "monospace", mb: 2 }}>
             {result.jsClass}
           </Typography>
           
@@ -72,6 +58,22 @@ export const ResultCard: React.FC<ResultCardProps> = ({
               variant="outlined"
             />
           </Box>
+          
+          <Divider sx={{ my: 2 }} />
+          
+          <Typography variant="overline" color="text.secondary" sx={{ fontSize: "0.75rem" }}>
+            RPC CLASS
+          </Typography>
+          <Typography variant="body1" sx={{ fontFamily: "monospace", mb: 2 }}>
+            {result.rpcClass}
+          </Typography>
+          
+          <Typography variant="overline" color="text.secondary" sx={{ fontSize: "0.75rem" }}>
+            RPC NAME
+          </Typography>
+          <Typography variant="body1" sx={{ fontFamily: "monospace", mb: 2 }}>
+            {result.rpcName}
+          </Typography>
         </Box>
         
         <Divider sx={{ my: 2 }} />
