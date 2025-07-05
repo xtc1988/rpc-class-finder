@@ -61,3 +61,6 @@ pnpm-lock.yaml
 # Backup files
 *.backup
 test-suggestions.html
+
+# Windows redirect artifacts
+nul
