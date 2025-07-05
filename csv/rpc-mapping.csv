@@ -1,0 +1,4 @@
+rpc_name,rpc_class
+testRI,jp.co.testRIclass
+userRI,jp.co.userRIclass
+orderRI,jp.co.orderRIclass

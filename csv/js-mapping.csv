@@ -1,0 +1,4 @@
+rpc_name,js_class,file_path
+testRI,test_js,test\common\test_js.js
+userRI,user_js,user\common\user_js.js
+orderRI,order_js,order\common\order_js.js

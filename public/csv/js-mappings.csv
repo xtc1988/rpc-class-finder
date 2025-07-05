@@ -1,0 +1,11 @@
+rpc_name,js_class,file_path
+test222RI,test_js,test\common\test_js.js
+333userManagementRI,UserManagement,src\modules\user\UserManagement.js
+orderProcessingRI,OrderProcessor,src\modules\order\OrderProcessor.js
+reportGeneratorRI,ReportGenerator,src\modules\report\ReportGenerator.js
+dataAnalyticsRI,DataAnalytics,src\modules\analytics\DataAnalytics.js
+authenticationRI,AuthenticationService,src\services\auth\AuthenticationService.js
+notificationRI,NotificationHandler,src\services\notification\NotificationHandler.js
+fileUploadRI,FileUploadManager,src\modules\file\FileUploadManager.js
+cacheManagementRI,CacheManager,src\services\cache\CacheManager.js
+searchEngineRI,SearchEngine,src\modules\search\SearchEngine.js
