@@ -1,58 +1,58 @@
 @echo off
-chcp 65001 > nul
+setlocal enabledelayedexpansion
+chcp 932 > nul 2>&1
 echo ======================================
-echo RPC Class Finder 起動スクリプト
+echo RPC Class Finder Startup Script
 echo ======================================
 echo.
 
-REM Node.jsがインストールされているか確認
-node --version > nul 2>&1
-if %errorlevel% neq 0 (
-    echo [エラー] Node.jsがインストールされていません。
+REM Check if Node.js is installed
+where node > nul 2>&1
+if errorlevel 1 (
+    echo [ERROR] Node.js is not installed.
     echo.
-    echo Node.jsをダウンロードしてインストールしてください：
+    echo Please download and install Node.js from:
     echo https://nodejs.org/
     echo.
     pause
     exit /b 1
 )
 
-echo [OK] Node.jsがインストールされています
+echo [OK] Node.js is installed
 node --version
 echo.
 
-REM node_modulesが存在するか確認
+REM Check if node_modules exists
 if not exist "node_modules" (
-    echo [情報] 依存関係をインストールしています...
-    echo これには数分かかる場合があります。
+    echo [INFO] Installing dependencies...
+    echo This may take a few minutes.
     echo.
     call npm install
-    if %errorlevel% neq 0 (
-        echo [エラー] 依存関係のインストールに失敗しました。
+    if errorlevel 1 (
+        echo [ERROR] Failed to install dependencies.
         pause
         exit /b 1
     )
     echo.
-    echo [OK] 依存関係のインストールが完了しました！
+    echo [OK] Dependencies installed successfully!
     echo.
 ) else (
-    echo [OK] 依存関係は既にインストールされています
+    echo [OK] Dependencies are already installed
     echo.
 )
 
 echo ======================================
-echo サーバーを起動しています...
+echo Starting server...
 echo ======================================
 echo.
-echo 5秒後にブラウザが自動的に開きます...
+echo Browser will open automatically in 5 seconds...
 echo.
-echo 終了するには、このウィンドウを閉じるか
-echo Ctrl+C を押してください。
+echo To exit, close this window or press Ctrl+C.
 echo.
 
-REM 5秒待ってからブラウザを開く
+REM Wait 5 seconds then open browser
 timeout /t 5 /nobreak > nul
 start http://localhost:3000
 
-REM サーバーを起動
+REM Start server
 npm run dev:renderer

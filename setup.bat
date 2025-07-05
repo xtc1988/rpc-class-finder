@@ -1,50 +1,51 @@
 @echo off
-chcp 65001 > nul
+setlocal enabledelayedexpansion
+chcp 932 > nul 2>&1
 echo ======================================
-echo RPC Class Finder 初回セットアップ
+echo RPC Class Finder Initial Setup
 echo ======================================
 echo.
 
-REM Node.jsがインストールされているか確認
-node --version > nul 2>&1
-if %errorlevel% neq 0 (
-    echo [エラー] Node.jsがインストールされていません。
+REM Check if Node.js is installed
+where node > nul 2>&1
+if errorlevel 1 (
+    echo [ERROR] Node.js is not installed.
     echo.
-    echo Node.jsをダウンロードしてインストールしてください：
+    echo Please download and install Node.js from:
     echo https://nodejs.org/
     echo.
-    echo 推奨: LTS版をダウンロードしてください
+    echo Recommended: Download LTS version
     echo.
     pause
     start https://nodejs.org/
     exit /b 1
 )
 
-echo [OK] Node.jsがインストールされています
+echo [OK] Node.js is installed
 node --version
 echo.
 
-echo npmのバージョン:
+echo npm version:
 npm --version
 echo.
 
 echo ======================================
-echo 依存関係をインストールしています...
+echo Installing dependencies...
 echo ======================================
 echo.
-echo これには数分かかる場合があります。
-echo お茶でも飲みながらお待ちください ☕
+echo This may take a few minutes.
+echo Please wait...
 echo.
 
 npm install
 
-if %errorlevel% neq 0 (
+if errorlevel 1 (
     echo.
-    echo [エラー] インストール中にエラーが発生しました。
+    echo [ERROR] Error occurred during installation.
     echo.
-    echo 以下を確認してください:
-    echo 1. インターネットに接続されているか
-    echo 2. ファイアウォールがnpmをブロックしていないか
+    echo Please check:
+    echo 1. Internet connection
+    echo 2. Firewall settings for npm
     echo.
     pause
     exit /b 1
@@ -52,11 +53,11 @@ if %errorlevel% neq 0 (
 
 echo.
 echo ======================================
-echo [OK] セットアップが完了しました！
+echo [OK] Setup completed successfully!
 echo ======================================
 echo.
-echo 次のステップ:
-echo 1. start.bat をダブルクリックしてアプリを起動
-echo 2. CSVファイルを編集する場合は public/csv フォルダ内のファイルを編集
+echo Next steps:
+echo 1. Double-click start.bat to launch the app
+echo 2. To edit CSV files, check public/csv folder
 echo.
 pause
