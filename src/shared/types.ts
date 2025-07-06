@@ -30,6 +30,13 @@ export interface AppState {
   };
 }
 
+export interface LogEntry {
+  timestamp: Date;
+  level: "info" | "error" | "warning" | "debug";
+  message: string;
+  details?: any;
+}
+
 export interface CsvManagerEvents {
   "data-loaded": {
     rpcMappings: RpcMapping[];

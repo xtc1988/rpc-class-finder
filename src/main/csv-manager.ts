@@ -25,7 +25,7 @@ export class CsvManager {
       return { rpcMappings, jsMappings };
     } catch (error) {
       console.error("Failed to load CSV data:", error);
-      throw new Error(`CSVデータの読み込みに失敗しました: ${error.message}`);
+      throw new Error(`CSVデータの読み込みに失敗しました: ${(error as Error).message}`);
     }
   }
 
@@ -34,7 +34,7 @@ export class CsvManager {
   }
 
   private async loadRpcMappings(): Promise<RpcMapping[]> {
-    if (\!fs.existsSync(this.CSV1_PATH)) {
+    if (!fs.existsSync(this.CSV1_PATH)) {
       throw new Error(`RPC mappings file not found: ${this.CSV1_PATH}`);
     }
 
@@ -59,7 +59,7 @@ export class CsvManager {
   }
 
   private async loadJsMappings(): Promise<JsMapping[]> {
-    if (\!fs.existsSync(this.CSV2_PATH)) {
+    if (!fs.existsSync(this.CSV2_PATH)) {
       throw new Error(`JS mappings file not found: ${this.CSV2_PATH}`);
     }
 
@@ -85,7 +85,7 @@ export class CsvManager {
   }
 
   async searchRpc(rpcClass: string): Promise<SearchResult |  null> {
-    if (\!rpcClass || rpcClass.trim() === "") {
+    if (!rpcClass || rpcClass.trim() === "") {
       return null;
     }
 
@@ -93,7 +93,7 @@ export class CsvManager {
       (mapping) => mapping.rpcClass.toLowerCase() === rpcClass.toLowerCase()
     );
 
-    if (\!rpcMapping) {
+    if (!rpcMapping) {
       throw new Error(`RPC Class not found: ${rpcClass}`);
     }
 
@@ -101,7 +101,7 @@ export class CsvManager {
       (mapping) => mapping.rpcName === rpcMapping.rpcName
     );
 
-    if (\!jsMapping) {
+    if (!jsMapping) {
       throw new Error(`JavaScript mapping not found for RPC: ${rpcMapping.rpcName}`);
     }
 
@@ -114,7 +114,7 @@ export class CsvManager {
   }
 
   async getSuggestions(query: string): Promise<string[]> {
-    if (\!query || query.trim() === "") {
+    if (!query || query.trim() === "") {
       return [];
     }
 

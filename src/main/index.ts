@@ -21,7 +21,7 @@ class App {
     });
 
     app.on("window-all-closed", () => {
-      if (process.platform \!== "darwin") {
+      if (process.platform !== "darwin") {
         app.quit();
       }
     });
@@ -71,7 +71,7 @@ class App {
         return { success: true, data };
       } catch (error) {
         console.error("CSV load error:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: (error as Error).message };
       }
     });
 
@@ -81,7 +81,7 @@ class App {
         return { success: true, data };
       } catch (error) {
         console.error("CSV reload error:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: (error as Error).message };
       }
     });
 
@@ -91,7 +91,7 @@ class App {
         return { success: true, result };
       } catch (error) {
         console.error("Search error:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: (error as Error).message };
       }
     });
 
@@ -101,7 +101,7 @@ class App {
         return { success: true, suggestions };
       } catch (error) {
         console.error("Suggestions error:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: (error as Error).message };
       }
     });
 
@@ -111,7 +111,7 @@ class App {
         return { success: true };
       } catch (error) {
         console.error("File open error:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: (error as Error).message };
       }
     });
 
@@ -121,7 +121,7 @@ class App {
         return { success: true };
       } catch (error) {
         console.error("Copy path error:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: (error as Error).message };
       }
     });
 

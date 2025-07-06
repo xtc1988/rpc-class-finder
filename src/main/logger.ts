@@ -16,7 +16,7 @@ export class Logger {
     this.logFile = path.join(logDir, `app-${new Date().toISOString().split('T')[0]}.log`);
   }
 
-  public log(level: 'info' | 'warn' | 'error', message: string, details?: any): void {
+  public log(level: 'info' | 'warning' | 'error', message: string, details?: any): void {
     const entry: LogEntry = {
       timestamp: new Date(),
       level,
@@ -34,7 +34,7 @@ export class Logger {
     
     if (level === 'error') {
       console.error(`[ERROR] ${message}`, details);
-    } else if (level === 'warn') {
+    } else if (level === 'warning') {
       console.warn(`[WARN] ${message}`, details);
     } else {
       console.log(`[INFO] ${message}`, details);

@@ -75,12 +75,6 @@ export const App: React.FC = () => {
     handleSearch(suggestion);
   };
 
-  const handleFileOpen = async (filePath: string) => {
-    // Web版ではアラートで表示
-    alert(`ファイルパス: ${filePath}\n\nWeb版ではファイルを直接開くことはできません。`);
-    setSnackbarMessage("ファイルパスを表示しました");
-    setShowSnackbar(true);
-  };
 
   const handleCopyPath = async (filePath: string) => {
     try {
@@ -153,7 +147,6 @@ export const App: React.FC = () => {
         {searchResult && !isLoading && (
           <ResultCard
             result={searchResult}
-            onFileOpen={handleFileOpen}
             onCopyPath={handleCopyPath}
           />
         )}

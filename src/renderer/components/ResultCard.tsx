@@ -10,20 +10,17 @@ import {
 } from "@mui/material";
 import {
   FileCopy as FileCopyIcon,
-  OpenInNew as OpenInNewIcon,
   CheckCircle as CheckCircleIcon,
 } from "@mui/icons-material";
 import { SearchResult } from "@shared/types";
 
 interface ResultCardProps {
   result: SearchResult;
-  onFileOpen: (filePath: string) => void;
   onCopyPath: (filePath: string) => void;
 }
 
 export const ResultCard: React.FC<ResultCardProps> = ({
   result,
-  onFileOpen,
   onCopyPath,
 }) => {
   return (
@@ -41,7 +38,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
             JAVASCRIPT CLASS
           </Typography>
           <Typography variant="h6" sx={{ fontFamily: "monospace", mb: 2 }}>
-            {result.jsClass}
+            {result.jsClass}.js
           </Typography>
           
           <Typography variant="overline" color="text.secondary" sx={{ fontSize: "0.75rem" }}>
@@ -79,13 +76,6 @@ export const ResultCard: React.FC<ResultCardProps> = ({
         <Divider sx={{ my: 2 }} />
         
         <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
-          <Button
-            variant="contained"
-            startIcon={<OpenInNewIcon />}
-            onClick={() => onFileOpen(result.filePath)}
-          >
-            ファイルを開く
-          </Button>
           <Button
             variant="outlined"
             startIcon={<FileCopyIcon />}

@@ -86,19 +86,6 @@ export const App: React.FC = () => {
     handleSearch(suggestion);
   };
 
-  const handleFileOpen = async (filePath: string) => {
-    try {
-      const result = await window.electronAPI.file.open(filePath);
-      if (result.success) {
-        setSnackbarMessage("ファイルを開きました");
-        setShowSnackbar(true);
-      } else {
-        setError(result.error);
-      }
-    } catch (error) {
-      setError("ファイルを開けませんでした");
-    }
-  };
 
   const handleCopyPath = async (filePath: string) => {
     try {
@@ -179,7 +166,6 @@ export const App: React.FC = () => {
         {searchResult && \!isLoading && (
           <ResultCard
             result={searchResult}
-            onFileOpen={handleFileOpen}
             onCopyPath={handleCopyPath}
           />
         )}

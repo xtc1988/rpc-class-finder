@@ -5,7 +5,7 @@ import * as path from "path";
 export class FileHandler {
   async openFile(filePath: string): Promise<void> {
     try {
-      if (\!fs.existsSync(filePath)) {
+      if (!fs.existsSync(filePath)) {
         throw new Error(`File not found: ${filePath}`);
       }
 
@@ -15,7 +15,7 @@ export class FileHandler {
       }
     } catch (error) {
       console.error("File open error:", error);
-      throw new Error(`ファイルを開けませんでした: ${error.message}`);
+      throw new Error(`ファイルを開けませんでした: ${(error as Error).message}`);
     }
   }
 
@@ -24,14 +24,14 @@ export class FileHandler {
       clipboard.writeText(text);
     } catch (error) {
       console.error("Clipboard copy error:", error);
-      throw new Error(`クリップボードへのコピーに失敗しました: ${error.message}`);
+      throw new Error(`クリップボードへのコピーに失敗しました: ${(error as Error).message}`);
     }
   }
 
   async openContainingFolder(filePath: string): Promise<void> {
     try {
       const folderPath = path.dirname(filePath);
-      if (\!fs.existsSync(folderPath)) {
+      if (!fs.existsSync(folderPath)) {
         throw new Error(`Folder not found: ${folderPath}`);
       }
 
@@ -41,7 +41,7 @@ export class FileHandler {
       }
     } catch (error) {
       console.error("Folder open error:", error);
-      throw new Error(`フォルダを開けませんでした: ${error.message}`);
+      throw new Error(`フォルダを開けませんでした: ${(error as Error).message}`);
     }
   }
 
@@ -56,7 +56,7 @@ export class FileHandler {
 
   getFileStats(filePath: string): fs.Stats |  null {
     try {
-      if (\!this.isValidPath(filePath)) {
+      if (!this.isValidPath(filePath)) {
         return null;
       }
       return fs.statSync(filePath);
