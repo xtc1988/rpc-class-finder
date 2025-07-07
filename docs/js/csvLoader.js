@@ -24,12 +24,19 @@ class CsvLoader {
     console.log('Loading CSV files...');
     try {
       // baseパスを取得
-      const basePath = window.location.pathname.includes('/rpc-class-finder/') ? '/rpc-class-finder/' : '/';
+      const basePath = window.location.pathname.includes('/rpc-class-finder/') ? '/rpc-class-finder/' : './';
+      console.log('Base path determined as:', basePath);
+      console.log('Current location:', window.location.href);
       
       // 並列でCSVファイルを読み込む
+      const rpcUrl = `${basePath}data/rpc-mappings.csv`;
+      const jsUrl = `${basePath}data/js-mappings.csv`;
+      console.log('Fetching RPC CSV from:', rpcUrl);
+      console.log('Fetching JS CSV from:', jsUrl);
+      
       const [rpcResponse, jsResponse] = await Promise.all([
-        fetch(`${basePath}data/rpc-mappings.csv`),
-        fetch(`${basePath}data/js-mappings.csv`)
+        fetch(rpcUrl),
+        fetch(jsUrl)
       ]);
 
       console.log('CSV fetch responses:', { 

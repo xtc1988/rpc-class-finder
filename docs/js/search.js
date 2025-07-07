@@ -8,10 +8,13 @@ class SearchManager {
 
   async initialize() {
     try {
+      console.log('SearchManager: Starting initialization...');
       this.dataLoading = true;
       this.csvData = await this.csvLoader.loadCsvData();
       this.dataLoading = false;
       console.log('SearchManager initialized with data:', this.csvData);
+      console.log('RPC mappings count:', this.csvData.rpcMappings.length);
+      console.log('JS mappings count:', this.csvData.jsMappings.length);
     } catch (error) {
       console.error('Failed to initialize SearchManager:', error);
       this.dataLoading = false;

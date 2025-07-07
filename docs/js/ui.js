@@ -23,9 +23,11 @@ class UIManager {
       filePath: document.getElementById('filePath'),
       rpcClass: document.getElementById('rpcClass'),
       rpcName: document.getElementById('rpcName'),
-      copyButton: document.getElementById('copyButton'),
       loadingIndicator: document.getElementById('loading')
     };
+    
+    // copyButtonは動的に生成されるため、存在しない場合がある
+    this.elements.copyButton = document.getElementById('copyButton');
   }
 
   bindEvents() {
@@ -61,10 +63,12 @@ class UIManager {
       }
     });
 
-    // コピーボタン
-    this.elements.copyButton.addEventListener('click', () => {
-      this.copyToClipboard();
-    });
+    // コピーボタン（存在する場合のみ）
+    if (this.elements.copyButton) {
+      this.elements.copyButton.addEventListener('click', () => {
+        this.copyToClipboard();
+      });
+    }
 
     // 外側クリックでサジェスト非表示
     document.addEventListener('click', (e) => {
@@ -110,6 +114,12 @@ class UIManager {
   async handleInputChange(value) {
     console.log('handleInputChange called with:', value);
     this.searchQuery = value;
+    
+    // CSVデータが読み込まれていない場合は何もしない
+    if (this.searchManager.getDataLoading()) {
+      console.log('CSV data still loading, skipping suggestions');
+      return;
+    }
     
     // 既存のタイムアウトをクリア
     if (this.suggestionTimeout) {
