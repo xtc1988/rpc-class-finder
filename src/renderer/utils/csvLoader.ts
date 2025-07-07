@@ -33,9 +33,10 @@ export class CsvLoader {
     console.log('Loading CSV files...');
     try {
       // 並列でCSVファイルを読み込む
+      const basePath = import.meta.env.BASE_URL || '/';
       const [rpcResponse, jsResponse] = await Promise.all([
-        fetch('/csv/rpc-mappings.csv'),
-        fetch('/csv/js-mappings.csv')
+        fetch(`${basePath}data/rpc-mappings.csv`),
+        fetch(`${basePath}data/js-mappings.csv`)
       ]);
 
       console.log('CSV fetch responses:', { 
