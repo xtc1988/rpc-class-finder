@@ -76,10 +76,11 @@ class UIManager {
 
   async initialize() {
     try {
+      console.log('Starting UI initialization...');
       this.showLoading();
       await this.searchManager.initialize();
       this.hideLoading();
-      console.log('UI initialized');
+      console.log('UI initialized successfully');
     } catch (error) {
       this.hideLoading();
       this.showError('アプリケーションの初期化に失敗しました');
@@ -107,6 +108,7 @@ class UIManager {
   }
 
   async handleInputChange(value) {
+    console.log('handleInputChange called with:', value);
     this.searchQuery = value;
     
     // 既存のタイムアウトをクリア
@@ -115,15 +117,18 @@ class UIManager {
     }
 
     if (value.trim().length > 0) {
+      console.log('Input length > 0, setting timeout for suggestions');
       // デバウンス処理
       this.suggestionTimeout = setTimeout(async () => {
         try {
+          console.log('Fetching suggestions for:', value);
           const suggestions = await this.searchManager.getSuggestions(value);
           console.log('Got suggestions:', suggestions);
           this.suggestions = suggestions;
           if (suggestions.length > 0) {
             this.showSuggestionsDropdown();
           } else {
+            console.log('No suggestions found, hiding dropdown');
             this.hideSuggestions();
           }
         } catch (error) {
@@ -133,6 +138,7 @@ class UIManager {
         }
       }, 300);
     } else {
+      console.log('Input empty, hiding suggestions');
       this.suggestions = [];
       this.hideSuggestions();
       this.hideResult();
@@ -140,12 +146,14 @@ class UIManager {
   }
 
   showSuggestionsDropdown() {
+    console.log('showSuggestionsDropdown called with suggestions:', this.suggestions);
     if (this.suggestions.length === 0) return;
 
     const html = this.suggestions.map(suggestion => 
-      `<div class="suggestion-item" onclick="uiManager.selectSuggestion('${suggestion}')">${suggestion}</div>`
+      `<div class="suggestion-item" onclick="window.uiManager.selectSuggestion('${suggestion}')">${suggestion}</div>`
     ).join('');
     
+    console.log('Setting suggestions HTML:', html);
     this.elements.suggestionsList.innerHTML = html;
     this.elements.suggestionsList.style.display = 'block';
     this.showSuggestions = true;
@@ -285,7 +293,6 @@ class UIManager {
 let uiManager;
 document.addEventListener('DOMContentLoaded', () => {
   uiManager = new UIManager();
+  // グローバルに公開（サジェスト選択用）
+  window.uiManager = uiManager;
 });
-
-// グローバルに公開（サジェスト選択用）
-window.uiManager = uiManager;
