@@ -1,0 +1,11 @@
+rpc_name,rpc_class
+testRI,jp.co.testRIclass
+userManagementRI,jp.co.userManagementRIclass
+orderProcessingRI,jp.co.orderProcessingRIclass
+reportGeneratorRI,jp.co.reportGeneratorRIclass
+dataAnalyticsRI,jp.co.dataAnalyticsRIclass
+authenticationRI,jp.co.authenticationRIclass
+notificationRI,jp.co.notificationRIclass
+fileUploadRI,jp.co.fileUploadRIclass
+cacheManagementRI,jp.co.cacheManagementRIclass
+searchEngineRI,jp.co.searchEngineRIclass
