@@ -164,10 +164,30 @@ class UIManager {
   }
 
   showResult(result) {
-    this.elements.jsClass.textContent = result.jsClass + '.js';
-    this.elements.filePath.textContent = result.filePath;
+    // RPC情報を表示
     this.elements.rpcClass.textContent = result.rpcClass;
     this.elements.rpcName.textContent = result.rpcName;
+    
+    // 複数のJavaScriptクラスを表示
+    const jsClassContainer = document.getElementById('jsClassContainer');
+    jsClassContainer.innerHTML = '';
+    
+    result.jsMappings.forEach((mapping, index) => {
+      const jsItem = document.createElement('div');
+      jsItem.className = 'js-mapping-item';
+      jsItem.innerHTML = `
+        <div class="js-class-header">
+          <span class="js-class-number">#${index + 1}</span>
+          <span class="js-class-name">${mapping.jsClass}.js</span>
+        </div>
+        <div class="file-path-container">
+          <div class="result-label">FILE PATH</div>
+          <div class="result-value file-path-value">${mapping.filePath}</div>
+          <button class="copy-btn" onclick="uiManager.copySpecificPath('${mapping.filePath}')">パスをコピー</button>
+        </div>
+      `;
+      jsClassContainer.appendChild(jsItem);
+    });
     
     this.elements.result.classList.add('show');
     this.searchResult = result;
@@ -196,10 +216,11 @@ class UIManager {
   }
 
   async copyToClipboard() {
-    if (!this.searchResult) return;
+    if (!this.searchResult || !this.searchResult.jsMappings || this.searchResult.jsMappings.length === 0) return;
     
     try {
-      await navigator.clipboard.writeText(this.searchResult.filePath);
+      // 最初のファイルパスをコピー（後方互換性のため）
+      await navigator.clipboard.writeText(this.searchResult.jsMappings[0].filePath);
       
       // 一時的にボタンテキストを変更
       const originalText = this.elements.copyButton.textContent;
@@ -213,6 +234,50 @@ class UIManager {
     } catch (error) {
       this.showError('コピーに失敗しました');
     }
+  }
+
+  async copySpecificPath(filePath) {
+    try {
+      await navigator.clipboard.writeText(filePath);
+      
+      // 成功メッセージを表示
+      this.showTemporaryMessage('パスをコピーしました！');
+    } catch (error) {
+      this.showError('コピーに失敗しました');
+    }
+  }
+
+  showTemporaryMessage(message) {
+    // 既存のメッセージがあれば削除
+    const existingMessage = document.querySelector('.temp-message');
+    if (existingMessage) {
+      existingMessage.remove();
+    }
+
+    // メッセージ要素を作成
+    const messageEl = document.createElement('div');
+    messageEl.className = 'temp-message';
+    messageEl.textContent = message;
+    messageEl.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #4caf50;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 4px;
+      z-index: 10000;
+      animation: fadeInOut 2s ease-in-out;
+    `;
+
+    document.body.appendChild(messageEl);
+
+    // 2秒後に削除
+    setTimeout(() => {
+      if (messageEl.parentNode) {
+        messageEl.parentNode.removeChild(messageEl);
+      }
+    }, 2000);
   }
 }
 

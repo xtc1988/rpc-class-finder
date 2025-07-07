@@ -37,19 +37,21 @@ class SearchManager {
         throw new Error(`RPC Class not found: ${query}`);
       }
       
-      const jsMapping = this.csvData.jsMappings.find(
+      const jsMappings = this.csvData.jsMappings.filter(
         mapping => mapping.rpcName === rpcMapping.rpcName
       );
       
-      if (!jsMapping) {
+      if (jsMappings.length === 0) {
         throw new Error(`JavaScript mapping not found for RPC: ${rpcMapping.rpcName}`);
       }
       
       return {
         rpcClass: rpcMapping.rpcClass,
         rpcName: rpcMapping.rpcName,
-        jsClass: jsMapping.jsClass,
-        filePath: jsMapping.filePath,
+        jsMappings: jsMappings.map(mapping => ({
+          jsClass: mapping.jsClass,
+          filePath: mapping.filePath
+        }))
       };
     } finally {
       this.isLoading = false;
